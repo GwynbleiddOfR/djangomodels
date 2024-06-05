@@ -1,0 +1,167 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href='{% static "gamewebstore/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "gamewebstore/css/stylesapi.css" %}'>
+    <title>Realizar venta</title>
+</head>
+
+<body style="background-color: #eee;">
+    <!-- Encabezado (navbar) -->
+    <nav class="navbar navbar-expand-md bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+                <img src="{% static 'gamewebstore/img/whitewolf.png' %}" alt="White Wolf Logo" style="margin-right: 10px;"> 
+                <h4 class="text-white" style="margin: 0">White Wolf</h4>
+            </a>
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'userProfile' %}">Mi perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'administrador' %}">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'login' %}">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'register' %}">Registrarse</a>
+                    </li>
+                </ul>
+                <div class="search-and-icons">
+                    <form class="d-flex mb-2 me-4" role="search">
+                        <input class="form-control me-2" type="search" aria-label="Search">
+                    </form>
+
+                    <div class="user-icons d-flex mb-2">
+                        <a href="{% url 'carrito' %}">
+                            <div class="cart"><i class="bi bi-cart-fill" style = "color:white;"></i></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Editar perfil -->
+    <section class="vh-100">
+        <div class="container py-5 h-100 animate__animated animate__backInLeft">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Formulario de venta</h3>
+
+                            <form action="{% url 'vistaVentas' %}" class="was-validated" id="formularioVenta" method="post">
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <label class="form-label" for="nameGame">Nombre del juego</label>
+                                            <input type="text" id="nameGame" name="nameGame"
+                                                placeholder="Nombre del juego..." class="form-control form-control-lg"
+                                                required minlength="2" />
+                                            <div class="invalid-feedback">Al menos 2 caracteres</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <label class="form-label" for="gameType">Género</label>
+                                            <input type="text" id="gameType" name="gameType" placeholder="Género..."
+                                                class="form-control form-control-lg" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ ]+"
+                                                required minlength="2" />
+                                            <div class="invalid-feedback">Al menos 2 caracteres, no se permiten números
+                                                ni caracteres especiales</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4 d-flex align-items-center">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <label class="form-label" for="consola">Consola</label>
+                                            <select id="consola" name="consola" class="form-control form-control-lg"
+                                                required />
+                                            <option value="">Selecciona una consola...</option>
+                                            <option value="ps1">Playstation 1</option>
+                                            <option value="ps2">Playstation 2</option>
+                                            <option value="ps3">Playstation 3</option>
+                                            <option value="ps4">Playstation 4</option>
+                                            <option value="ps5">Playstation 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4 d-flex align-items-center">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <label class="form-label" for="precio">Precio</label>
+                                            <input type="number" id="precio" name="precio" placeholder="$"
+                                                class="form-control form-control-lg" oninput="validarLongitudInput('precio', 6)"
+                                                required min="0" max="999999" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4 d-flex align-items-center">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <label class="form-label" for="copias">Número de copias</label>
+                                            <input type="number" id="copias" name="copias" placeholder="N° de copias..."
+                                                class="form-control form-control-lg" oninput="validarLongitudInput('copias', 2)"
+                                                required min="1" maxlength="3" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <label class="form-label" for="descripcion">Descripción</label>
+                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="10"
+                                                required></textarea>
+                                            <div class="invalid-feedback">Agregue una descripción de su juego</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <label class="form-label" for="archivo">Subir imagen</label> <br>
+                                        <input class="form-control" id="archivo" name="archivo" type="file" required>
+                                        <div class="invalid-feedback">Agregue una imagen de su juego</div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" id="botonVenta" class="btn btn-dark btn-lg mb-3">Realizar venta</button>
+                                </div>
+
+                            
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src='{% static "gamewebstore/js/scripts.js" %}'></script>
+    <script src='{% static "gamewebstore/js/bootstrap.bundle.min.js" %}'></script>
+</body>
+
+</html>
