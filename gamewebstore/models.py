@@ -1,7 +1,7 @@
 from django.db import models
 from .enumeraciones import *
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.utils import timezone
+import datetime
 
 # Create your models here.
 class Usuario(models.Model):
@@ -14,7 +14,7 @@ class Usuario(models.Model):
     ciudad=models.CharField(max_length=20, choices=NOMB_CIUDAD)
     direccion=models.CharField(max_length=75, null=False)
     contraseña = models.CharField(max_length=50, null=False, default='')
-    fecha_creacion = models.DateTimeField(default=timezone.now)
+    fecha_creacion = models.DateTimeField(default=datetime.date.today)
 
     def __str__(self):
         return self.nombre
@@ -34,7 +34,7 @@ class Juego(models.Model):
 
 class Pedido(models.Model):
     comprador = models.ForeignKey(Usuario, on_delete=models.PROTECT)
-    fecha_pedido = models.DateTimeField(auto_now_add=True)
+    fecha_pedido = models.DateTimeField(default=datetime.date.today)
     estado = models.CharField(max_length=50)
 
     def __str__(self):
