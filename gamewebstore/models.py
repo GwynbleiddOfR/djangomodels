@@ -14,7 +14,7 @@ class Usuario(models.Model):
     ciudad=models.CharField(max_length=20, choices=NOMB_CIUDAD)
     direccion=models.CharField(max_length=75, null=False)
     contraseña = models.CharField(max_length=50, null=False, default='')
-    fecha_creacion = models.DateTimeField(default=datetime.date.today)
+    fecha_creacion = models.DateField()
 
     def __str__(self):
         return self.nombre
@@ -34,7 +34,7 @@ class Juego(models.Model):
 
 class Pedido(models.Model):
     comprador = models.ForeignKey(Usuario, on_delete=models.PROTECT)
-    fecha_pedido = models.DateTimeField(default=datetime.date.today)
+    fecha_pedido = models.DateField()
     estado = models.CharField(max_length=50)
 
     def __str__(self):
